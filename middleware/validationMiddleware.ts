@@ -1,5 +1,9 @@
 import { body, param, validationResult } from 'express-validator';
-import { BadRequestError, NotFoundError } from '../errors/customError.js';
+import {
+  BadRequestError,
+  NotFoundError,
+  UnauthorizedError,
+} from '../errors/customError.js';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -13,6 +17,9 @@ const withValidationErrors = (validateValues) => {
         const errorMessages = errors.array().map((error) => error.msg);
         if (errorMessages[0].startsWith('no dog')) {
           throw new NotFoundError(errorMessages[0]);
+        }
+        if (errorMessages[0].startsWith('access not')) {
+          throw new UnauthorizedError(errorMessages[0]);
         }
         throw new BadRequestError(errorMessages.join(','));
       }
@@ -45,12 +52,12 @@ export const validateDogInput = withValidationErrors([
     .isISO8601()
     .toDate()
     .withMessage('dateVisited must be a date'),
-  body('vetId').notEmpty().withMessage('vetId is required').trim(),
+  /* body('vetId').notEmpty().withMessage('vetId is required').trim(), */
   body('ownerName').notEmpty().withMessage('ownerName is required').trim(),
 ]);
 
 export const validateDogId = withValidationErrors([
-  param('id').custom(async (value) => {
+  param('id').custom(async (value, { req }) => {
     const isValidId = typeof value === 'string';
     if (!isValidId) throw new BadRequestError('invalid id');
     const dog = await prisma.dogs.findUnique({
@@ -58,9 +65,13 @@ export const validateDogId = withValidationErrors([
         id: value,
       },
     });
-    if (!dog) {
-      throw new NotFoundError(`no dog with id: ${value}`);
-    }
+
+    if (!dog) throw new NotFoundError(`no dog with id: ${value}`);
+
+    const isAdmin = req.user.role === 'admin';
+    const isOwner = req.user.userId === dog.vetId;
+    if (!isAdmin && !isOwner)
+      throw new UnauthorizedError('access not authorized');
   }),
 ]);
 
@@ -94,4 +105,25 @@ export const validateLoginInput = withValidationErrors([
     .withMessage('invalid email format')
     .trim(),
   body('password').notEmpty().withMessage('password is required').trim(),
+]);
+
+export const validateUpdateUserInput = withValidationErrors([
+  body('firstName').notEmpty().withMessage('first name is required').trim(),
+  body('lastName').notEmpty().withMessage('last name is required').trim(),
+  body('email')
+    .notEmpty()
+    .withMessage('email is required')
+    .isEmail()
+    .withMessage('invalid email format')
+    .trim()
+    .custom(async (email, { req }) => {
+      const user = await prisma.users.findUnique({
+        where: {
+          email: email,
+        },
+      });
+      if (user && user.id !== req.user.userId) {
+        throw new BadRequestError('email already exists');
+      }
+    }),
 ]);

@@ -1,4 +1,5 @@
 import 'express-async-errors';
+import cookieParser from 'cookie-parser';
 
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -8,19 +9,23 @@ import morgan from 'morgan';
 
 const app = express();
 
-
 //routers
 import dogRouter from './routes/dogRouter.js';
 import authRouter from './routes/authRouter.js';
+import userRouter from './routes/userRouter.js';
 
 //Middleware
 import { errorHandlerMiddleware } from '../middleware/errorHandlerMiddleware.js';
+import { authenticateUser } from '../middleware/authMiddleware.js';
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 app.use(express.json());
-app.use('/dogs', dogRouter);
+app.use(cookieParser());
+
+app.use('/dogs', authenticateUser, dogRouter);
+app.use('/user', authenticateUser, userRouter);
 app.use('/auth', authRouter);
 
 //NOT FOUND ROUTE MIDDLEWARE
