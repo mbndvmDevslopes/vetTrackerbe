@@ -13,7 +13,7 @@ export const comparePassword = async (password, hashedPassword) => {
 
 
 // Exclude keys from user
-export function exclude<User, Key extends keyof User>(
+export function excludePassword<User, Key extends keyof User>(
   user: User,
   keys: Key[]
 ): Omit<User, Key> {

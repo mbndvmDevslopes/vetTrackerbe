@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { StatusCodes } from 'http-status-codes';
-import { exclude } from '../../utils/passwordUtils.js';
+import { excludePassword } from '../../utils/passwordUtils.js';
 
 const prisma = new PrismaClient();
 
@@ -10,8 +10,8 @@ export const getCurrentUser = async (req, res) => {
       id: req.user.userId,
     },
   });
-  const userSansPassword = exclude(user, ['password']);
-  res.status(StatusCodes.OK).json({ userSansPassword });
+  const loggedInUserWithoutPassword = excludePassword(user, ['password']);
+  res.status(StatusCodes.OK).json({ loggedInUserWithoutPassword });
 };
 
 export const getStats = async (req, res) => {

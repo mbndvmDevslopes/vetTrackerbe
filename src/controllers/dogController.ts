@@ -47,6 +47,20 @@ export const editDog = async (req, res) => {
   res.status(StatusCodes.OK).json({ msg: 'dog updated', editedDog });
 };
 
+export const editDogActiveStatus = async (req, res) => {
+  const data = req.body;
+
+  const { id } = req.params;
+
+  const editedDog = await prisma.dogs.update({
+    data,
+    where: {
+      id: id,
+    },
+  });
+  res.status(StatusCodes.OK).json({ msg: 'dog updated', editedDog });
+};
+
 export const deleteDog = async (req, res) => {
   const { id } = req.params;
   const dog = await prisma.dogs.delete({
