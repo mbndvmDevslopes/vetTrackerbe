@@ -40,6 +40,8 @@ model dogsConditions {
   id          String @id @default(uuid())
   conditionId String
   dogId       String
+  
+  
 }
 
 model Conditions {

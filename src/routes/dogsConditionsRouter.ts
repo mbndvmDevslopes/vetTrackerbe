@@ -8,6 +8,16 @@ import {
   getDogsConditions,
   updateDogConditions,
 } from '../controllers/dogsConditionsController.js';
+import {
+  validateCreateDogsConditions,
+  validateDeleteAllDogsConditions,
+  validateUpdateDogConditions,
+} from '../../middleware/validationMiddleware.js';
+/* import {
+  validateCreateDogsConditions,
+  validateDogId,
+} from '../../middleware/validationMiddleware.js'; */
+
 const router = express.Router({ mergeParams: true });
 
 /* router.get('/', getAllDogs);
@@ -16,9 +26,15 @@ router.patch('/', editDog);
 router.post('/', createDog);
 router.delete('/', deleteDog); */
 
-router.route('/:id').patch(updateDogConditions).delete(deleteAllDogsConditions);
+router
+  .route('/')
+  .patch(validateUpdateDogConditions, updateDogConditions)
+  .delete(validateDeleteAllDogsConditions, deleteAllDogsConditions);
 
-router.route('/').get(getDogsConditions).post(createDogsConditions);
+router
+  .route('/')
+  .get(getDogsConditions)
+  .post(validateCreateDogsConditions, createDogsConditions);
 
 export default router;
 // routes/dogsConditionsRoutes.js

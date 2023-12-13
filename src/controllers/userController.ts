@@ -1,31 +1,38 @@
+import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { StatusCodes } from 'http-status-codes';
 import { excludePassword } from '../../utils/passwordUtils.js';
 
 const prisma = new PrismaClient();
 
-export const getCurrentUser = async (req, res) => {
-  const user = await prisma.users.findUnique({
+type UserRequest = Request & {
+  user?: {
+    userId: string;
+  };
+};
+
+export const getCurrentUser = async (req: UserRequest, res: Response) => {
+  const userFromDb = await prisma.users.findUnique({
     where: {
-      id: req.user.userId,
+      id: req.user.userId || null,
     },
   });
-  const loggedInUserWithoutPassword = excludePassword(user, ['password']);
+  const loggedInUserWithoutPassword = excludePassword(userFromDb, ['password']);
   res.status(StatusCodes.OK).json({ loggedInUserWithoutPassword });
 };
 
-export const getStats = async (req, res) => {
+export const getStats = async (_: Request, res: Response) => {
   const users = await prisma.users.count();
   const dogs = await prisma.dogs.count();
   res.status(StatusCodes.OK).json({ users, dogs });
 };
 
-export const updateUser = async (req, res) => {
-  const obj = { ...req.body };
-  delete obj.password;
+export const updateUser = async (req: UserRequest, res: Response) => {
+  const newUser = { ...req.body };
+  delete newUser.password;
   const id = req.user.userId;
 
-  const data = obj;
+  const data = newUser;
   await prisma.users.update({
     where: {
       id: id,

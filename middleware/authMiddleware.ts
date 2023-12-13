@@ -1,10 +1,22 @@
+import { Request, Response, NextFunction } from 'express';
 import { verifyJWT } from '../utils/tokenUtils.js';
 import {
   UnauthenticatedError,
   UnauthorizedError,
 } from '../errors/customError.js';
 
-export const authenticateUser = async (req, res, next) => {
+type UserRequest = Request & {
+  user?: {
+    userId: string;
+    role: string;
+  };
+};
+
+export const authenticateUser = async (
+  req: UserRequest,
+  _: Response,
+  next: NextFunction
+) => {
   const { token } = req.cookies;
   if (!token) throw new UnauthenticatedError('authentication invalid');
   try {
@@ -16,8 +28,8 @@ export const authenticateUser = async (req, res, next) => {
   }
 };
 
-export const authorizePermissions = (...role) => {
-  return async (req, res, next) => {
+export const authorizePermissions = (...role: string[]) => {
+  return async (req: UserRequest, _: Response, next: NextFunction) => {
     if (!role.includes(req.user.role)) {
       throw new UnauthorizedError('unauthorized');
     }

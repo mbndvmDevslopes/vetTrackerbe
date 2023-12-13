@@ -127,3 +127,40 @@ export const validateUpdateUserInput = withValidationErrors([
       }
     }),
 ]);
+
+export const validateCreateDogsConditions = withValidationErrors([
+  param('dogId').notEmpty().withMessage('dog id must be present and valid'),
+]);
+
+export const validateUpdateDogConditions = withValidationErrors([
+  param('dogId').custom(async (value) => {
+    const isValidId = typeof value === 'string';
+    if (!isValidId) throw new BadRequestError('invalid dogId');
+    const dog = await prisma.dogs.findUnique({
+      where: {
+        id: value,
+      },
+    });
+
+    if (!dog) throw new NotFoundError(`no dog with id: ${value}`);
+  }),
+  body('conditionIds')
+    .notEmpty()
+    .withMessage('conditionIds must be present and valid')
+    .isArray()
+    .withMessage('conditionIds must be an array'),
+]);
+
+export const validateDeleteAllDogsConditions = withValidationErrors([
+  param('dogId').custom(async (value) => {
+    const isValidId = typeof value === 'string';
+    if (!isValidId) throw new BadRequestError('invalid dogId');
+    const dog = await prisma.dogs.findUnique({
+      where: {
+        id: value,
+      },
+    });
+
+    if (!dog) throw new NotFoundError(`no dog with id: ${value}`);
+  }),
+]);
