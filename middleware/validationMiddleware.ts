@@ -69,8 +69,8 @@ export const validateDogId = withValidationErrors([
     if (!dog) throw new NotFoundError(`no dog with id: ${value}`);
 
     const isAdmin = req.user.role === 'admin';
-    const isOwner = req.user.userId === dog.vetId;
-    if (!isAdmin && !isOwner)
+    const isVet = req.user.userId === dog.vetId;
+    if (!isAdmin && !isVet)
       throw new UnauthorizedError('access not authorized');
   }),
 ]);

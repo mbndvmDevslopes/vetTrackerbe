@@ -1,15 +1,13 @@
+import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { StatusCodes } from 'http-status-codes';
 import { hashPassword, comparePassword } from '../../utils/passwordUtils.js';
 import { createJWT } from '../../utils/tokenUtils.js';
-import {
-  UnauthenticatedError,
-  UnauthorizedError,
-} from '../../errors/customError.js';
+import { UnauthenticatedError } from '../../errors/customError.js';
 
 const prisma = new PrismaClient();
 
-export const register = async (req, res) => {
+export const register = async (req: Request, res: Response) => {
   const data = req.body;
   const isFirstAccount = (await prisma.users.count()) === 0;
   req.body.role = isFirstAccount ? 'admin' : 'user';
@@ -24,7 +22,7 @@ export const register = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ msg: 'user created' });
 };
 
-export const login = async (req, res) => {
+export const login = async (req: Request, res: Response) => {
   const data = req.body;
   const user = await prisma.users.findUnique({
     where: {
@@ -45,13 +43,12 @@ export const login = async (req, res) => {
     httpOnly: true,
     expires: new Date(Date.now() + oneDay),
     secure: process.env.NODE_ENV === 'production' ? true : false,
-    sameSite: 'Lax',
   });
 
   res.status(StatusCodes.OK).json({ msg: 'user logged in' });
 };
 
-export const logout = (req, res) => {
+export const logout = (_: Request, res: Response) => {
   res.cookie('token', 'logout', {
     httpOnly: true,
     expires: new Date(Date.now()),

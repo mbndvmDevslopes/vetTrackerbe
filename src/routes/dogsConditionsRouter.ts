@@ -36,6 +36,8 @@ router
   .get(getDogsConditions)
   .post(validateCreateDogsConditions, createDogsConditions);
 
+
+
 export default router;
 // routes/dogsConditionsRoutes.js
 

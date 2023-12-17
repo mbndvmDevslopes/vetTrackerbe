@@ -1,10 +1,17 @@
+import { Request, Response } from 'express';
+
 import { PrismaClient } from '@prisma/client';
 import { StatusCodes } from 'http-status-codes';
 
 const prisma = new PrismaClient();
 
-export const getAllDogs = async (req, res) => {
-  console.log(req.user);
+type UserRequest = Request & {
+  user?: {
+    userId: string;
+  };
+};
+
+export const getAllDogs = async (req: UserRequest, res: Response) => {
   const dogs = await prisma.dogs.findMany({
     where: {
       vetId: req.user.userId,
@@ -13,7 +20,7 @@ export const getAllDogs = async (req, res) => {
   res.send(dogs);
 };
 
-export const createDog = async (req, res) => {
+export const createDog = async (req: UserRequest, res) => {
   req.body.vetId = req.user.userId;
   const data = req.body;
   const newDog = await prisma.dogs.create({
@@ -22,7 +29,7 @@ export const createDog = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ msg: 'data received', newDog });
 };
 
-export const getDog = async (req, res) => {
+export const getDog = async (req: Request, res: Response) => {
   const { id } = req.params;
   const dog = await prisma.dogs.findUnique({
     where: {
