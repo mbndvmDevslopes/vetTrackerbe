@@ -31,7 +31,7 @@ export const getDog = async (req, res) => {
     const { id } = req.params;
     const dog = dogs.find((dog) => dog.id === id);
     if (!dog) {
-        throw new Error('no job with that id');
+        throw new Error('no dog with that id');
         return res.status(404).json({ msg: `No dog found with ${id}` });
     }
     res.status(200).json({ dog });

@@ -1,5 +1,6 @@
 import 'express-async-errors';
 import cookieParser from 'cookie-parser';
+import helmet from 'helmet';
 
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -28,6 +29,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
+app.use(helmet());
 
 app.use('/api/dogs', authenticateUser, dogRouter);
 app.use('/api/user', authenticateUser, userRouter);
@@ -35,11 +37,8 @@ app.use('/api/auth', authRouter);
 app.use('/api/conditions', authenticateUser, conditionsRouter);
 app.use('/api/checkUsage', authenticateUser, conditionsCheckRouter);
 
-/* app.get('/test', (req, res) => {
-  res.json({ msg: 'test route' });
-}); */
 //NOT FOUND ROUTE MIDDLEWARE
-app.use('*', (req, res) => {
+app.use('*', (_, res) => {
   res.status(404).json({ msg: 'not found' });
 });
 

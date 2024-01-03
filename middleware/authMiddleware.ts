@@ -18,7 +18,9 @@ export const authenticateUser = async (
   next: NextFunction
 ) => {
   const { token } = req.cookies;
-  if (!token) throw new UnauthenticatedError('authentication invalid');
+  if (!token) {
+    throw new UnauthenticatedError('authentication invalid');
+  }
   try {
     const { userId, role } = verifyJWT(token);
     req.user = { userId, role };
