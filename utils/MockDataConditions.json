@@ -1,0 +1,14 @@
+[
+  { "conditionName": "Atopy" },
+  { "conditionName": "Fracture" },
+  { "conditionName": "Osteoarthritis" },
+  { "conditionName": "Otiits Externa" },
+  { "conditionName": "Pyoderma" },
+  { "conditionName": "Pyometra" },
+  { "conditionName": "Fleas" },
+  { "conditionName": "Intestinal Parasites" },
+  { "conditionName": "Vaccines Only" },
+  { "conditionName": "Leptospirosis" },
+  { "conditionName": "Giardiasis" },
+  { "conditionName": "Pancreatitis" }
+]

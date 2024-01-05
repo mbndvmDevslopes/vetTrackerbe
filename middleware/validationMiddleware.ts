@@ -52,7 +52,7 @@ export const validateDogInput = withValidationErrors([
     .isISO8601()
     .toDate()
     .withMessage('dateVisited must be a date'),
-  /* body('vetId').notEmpty().withMessage('vetId is required').trim(), */
+
   body('ownerName').notEmpty().withMessage('ownerName is required').trim(),
 ]);
 
