@@ -21,6 +21,7 @@ export const getCurrentUser = async (req: UserRequest, res: Response) => {
   res.status(StatusCodes.OK).json({ loggedInUserWithoutPassword });
 };
 
+//This to be implemented in the future
 export const getStats = async (_: Request, res: Response) => {
   const users = await prisma.users.count();
   const dogs = await prisma.dogs.count();
@@ -42,3 +43,16 @@ export const updateUser = async (req: UserRequest, res: Response) => {
 
   res.status(StatusCodes.OK).json({ msg: 'user updated' });
 };
+
+
+export const allUsers = async (_:UserRequest, res:Response) => {
+  const users = await prisma.users.findMany({
+    select:{
+      email:true,
+      firstName: true,
+      lastName: true,
+      role:true,
+    }
+})
+res.status(StatusCodes.OK).json(users)
+}

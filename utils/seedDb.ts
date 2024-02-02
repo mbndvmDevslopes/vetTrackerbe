@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 try {
   const user = await prisma.users.findUnique({
-    where: { email: 'ms@gmail.com' },
+    where: { email: 'jh@gmail.com' },
   });
 
   const jsonDogs = JSON.parse(
@@ -80,23 +80,3 @@ LIMIT 5
   process.exit(1);
 }
 
-/* const data = Array.from({length:100}).map(()=> {data}) */
-/* faker.animal.dog(): string
-faker.animal.dog() // 'Irish Water Spaniel'faker.person.sex(): string
-faker.person.sex() // 'female'
-faker.person.firstName(sex?: 'female' | 'male'): string
-faker.person.firstName() // 'Antwan'
-faker.person.firstName('female') // 'Victoria'
-faker.person.firstName('male') // 'Tom'
-faker.person.lastName(sex?: 'female' | 'male'): string
-faker.person.lastName() // 'Hauck'
-faker.person.lastName('female') // 'Grady'
-faker.person.lastName('male') // 'Barton'
-faker.person.fullName()
-faker.number.float(options: number | {
-  max: 120,
-  min: 0.5,
-  precision: 0.1
-} = {}): number
-faker.date.between({ from: '2020-01-01T00:00:00.000Z', to: '2030-01-01T00:00:00.000Z' }) // '2026-05-16T02:22:53.002Z'
-faker.datatype.boolean()  */
