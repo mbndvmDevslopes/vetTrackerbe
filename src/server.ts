@@ -6,7 +6,6 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
 
-import morgan from 'morgan';
 import cors from 'cors';
 
 const app = express();
@@ -21,10 +20,6 @@ import { errorHandlerMiddleware } from '../middleware/errorHandlerMiddleware.js'
 import { authenticateUser } from '../middleware/authMiddleware.js';
 import conditionsRouter from './routes/conditionsRouter.js';
 import conditionsCheckRouter from './routes/conditionsCheckRouter.js';
-
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
-}
 
 app.use(cors());
 app.use(express.json());
