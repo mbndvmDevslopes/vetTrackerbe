@@ -6,7 +6,7 @@ import {
   getAllConditions,
   createCondition,
   deleteCondition,
-} from '../controllers/conditionsController.js';
+} from '../controllers/conditionsController.ts';
 
 
 router.route('/').get(getAllConditions).post(createCondition);

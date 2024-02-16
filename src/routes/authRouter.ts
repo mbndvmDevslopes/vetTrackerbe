@@ -1,11 +1,11 @@
 import { Router } from 'express';
 const router = Router();
 
-import { login, logout, register } from '../controllers/authController';
+import { login, logout, register } from '../controllers/authController.ts';
 import {
   validateRegisterInput,
   validateLoginInput,
-} from '../../middleware/validationMiddleware';
+} from '../../middleware/validationMiddleware.ts';
 import rateLimit from 'express-rate-limit';
 
 const apiLimiter = rateLimit({

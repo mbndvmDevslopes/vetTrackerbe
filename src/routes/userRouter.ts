@@ -6,8 +6,8 @@ import {
   updateUser,
   allUsers,
 } from '../controllers/userController.js';
-import { validateUpdateUserInput } from '../../middleware/validationMiddleware.js';
-import { authorizePermissions } from '../../middleware/authMiddleware.js';
+import { validateUpdateUserInput } from '../../middleware/validationMiddleware.ts';
+import { authorizePermissions } from '../../middleware/authMiddleware.ts';
 
 router.get('/current-user', getCurrentUser);
 router.get('/admin/all-users', [authorizePermissions('admin'), allUsers]); 
