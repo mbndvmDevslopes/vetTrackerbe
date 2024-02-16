@@ -14,14 +14,14 @@ type UserRequest = Request & {
 export const getAllDogs = async (req: UserRequest, res: Response) => {
   const dogs = await prisma.dogs.findMany({
     where: {
-      vetId: req.user.userId,
+      vetId: req.user?.userId,
     },
   });
   res.send(dogs);
 };
 
-export const createDog = async (req: UserRequest, res) => {
-  req.body.vetId = req.user.userId;
+export const createDog = async (req: UserRequest, res: Response) => {
+  req.body.vetId = req.user?.userId;
   const data = req.body;
   const newDog = await prisma.dogs.create({
     data,
@@ -40,7 +40,7 @@ export const getDog = async (req: Request, res: Response) => {
   res.status(StatusCodes.OK).json({ dog });
 };
 
-export const editDog = async (req, res) => {
+export const editDog = async (req: Request, res: Response) => {
   const data = req.body;
 
   const { id } = req.params;
@@ -54,7 +54,7 @@ export const editDog = async (req, res) => {
   res.status(StatusCodes.OK).json({ msg: 'dog updated', editedDog });
 };
 
-export const editDogActiveStatus = async (req, res) => {
+export const editDogActiveStatus = async (req: Request, res: Response) => {
   const data = req.body;
 
   const { id } = req.params;
@@ -68,7 +68,7 @@ export const editDogActiveStatus = async (req, res) => {
   res.status(StatusCodes.OK).json({ msg: 'dog updated', editedDog });
 };
 
-export const deleteDog = async (req, res) => {
+export const deleteDog = async (req: Request, res: Response) => {
   const { id } = req.params;
   const dog = await prisma.dogs.delete({
     where: {

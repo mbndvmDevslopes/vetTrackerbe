@@ -6,12 +6,12 @@ import {
   deleteAllDogsConditions,
   getDogsConditions,
   updateDogConditions,
-} from '../controllers/dogsConditionsController.js';
+} from '../controllers/dogsConditionsController.ts';
 import {
   validateCreateDogsConditions,
   validateDeleteAllDogsConditions,
   validateUpdateDogConditions,
-} from '../../middleware/validationMiddleware.js';
+} from '../../middleware/validationMiddleware.ts';
 
 const router = express.Router({ mergeParams: true });
 

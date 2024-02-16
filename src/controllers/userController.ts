@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { StatusCodes } from 'http-status-codes';
-import { excludePassword } from '../../utils/passwordUtils.js';
+import { excludePassword } from '../../utils/passwordUtils.ts';
 
 const prisma = new PrismaClient();
 
@@ -14,10 +14,12 @@ type UserRequest = Request & {
 export const getCurrentUser = async (req: UserRequest, res: Response) => {
   const userFromDb = await prisma.users.findUnique({
     where: {
-      id: req.user.userId || null,
+      id: req.user?.userId || undefined,
     },
   });
-  const loggedInUserWithoutPassword = excludePassword(userFromDb, ['password']);
+  const loggedInUserWithoutPassword = excludePassword(userFromDb!, [
+    'password',
+  ]);
   res.status(StatusCodes.OK).json({ loggedInUserWithoutPassword });
 };
 
@@ -31,7 +33,7 @@ export const getStats = async (_: Request, res: Response) => {
 export const updateUser = async (req: UserRequest, res: Response) => {
   const newUser = { ...req.body };
   delete newUser.password;
-  const id = req.user.userId;
+  const id = req.user?.userId;
 
   const data = newUser;
   await prisma.users.update({

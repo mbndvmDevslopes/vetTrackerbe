@@ -1,15 +1,19 @@
 import { Request, Response, NextFunction } from 'express';
-import { verifyJWT } from '../utils/tokenUtils.js';
+import { verifyJWT } from '../utils/tokenUtils.ts';
 import {
   UnauthenticatedError,
   UnauthorizedError,
-} from '../errors/customError.js';
+} from '../errors/customError.ts';
 
 type UserRequest = Request & {
   user?: {
     userId: string;
     role: string;
   };
+};
+type JwtPayload = {
+  userId: string;
+  role: string;
 };
 
 export const authenticateUser = async (
@@ -22,7 +26,7 @@ export const authenticateUser = async (
     throw new UnauthenticatedError('authentication invalid');
   }
   try {
-    const { userId, role } = verifyJWT(token);
+    const { userId, role } = verifyJWT(token) as JwtPayload;
     req.user = { userId, role };
     next();
   } catch (error) {
@@ -32,9 +36,10 @@ export const authenticateUser = async (
 
 export const authorizePermissions = (...role: string[]) => {
   return async (req: UserRequest, _: Response, next: NextFunction) => {
-    if (!role.includes(req.user.role)) {
-      throw new UnauthorizedError('unauthorized');
+    // if (!role.includes(req.user.role)) {
+    if (req.user && role.includes(req.user.role)) {
+      next();
     }
-    next();
+    throw new UnauthorizedError('unauthorized');
   };
 };

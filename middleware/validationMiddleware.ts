@@ -5,13 +5,14 @@ import {
   UnauthorizedError,
 } from '../errors/customError.js';
 import { PrismaClient } from '@prisma/client';
+import { NextFunction } from 'express';
 
 const prisma = new PrismaClient();
 
-const withValidationErrors = (validateValues) => {
+const withValidationErrors = (validateValues: unknown[]) => {
   return [
     ...validateValues,
-    async (req, res, next) => {
+    async (req: Request, _: Response, next: NextFunction) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         const errorMessages = errors.array().map((error) => error.msg);

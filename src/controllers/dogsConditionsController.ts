@@ -5,6 +5,11 @@ import { StatusCodes } from 'http-status-codes';
 
 const prisma = new PrismaClient();
 
+type DogsConditionsData = {
+  conditionId: string;
+  dogId: string;
+};
+
 export const getDogsConditions = async (req: Request, res: Response) => {
   const { dogId } = req.params;
 
@@ -48,7 +53,9 @@ export const updateDogConditions = async (req: Request, res: Response) => {
   }));
 
   const createdDogsConditions = await prisma.$transaction(
-    dogsConditionsData.map((data) => prisma.dogsConditions.create({ data }))
+    dogsConditionsData.map((data: DogsConditionsData) =>
+      prisma.dogsConditions.create({ data })
+    )
   );
   res
     .status(StatusCodes.OK)
@@ -74,7 +81,7 @@ export const createDogsConditions = async (req: Request, res: Response) => {
     dogId,
   }));
   const createdDogsConditions = await prisma.$transaction(
-    createMany.map((data) =>
+    createMany.map((data: DogsConditionsData) =>
       prisma.dogsConditions.create({
         data,
       })

@@ -2,7 +2,7 @@ import { Router } from 'express';
 import {
   validateDogInput,
   validateDogId,
-} from '../../middleware/validationMiddleware.js';
+} from '../../middleware/validationMiddleware.ts';
 
 const router = Router();
 
