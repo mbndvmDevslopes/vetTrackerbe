@@ -7,22 +7,49 @@ import {
   getDogsConditions,
   updateDogConditions,
 } from '../controllers/dogsConditionsController.ts';
-import {
-  validateCreateDogsConditions,
-  validateDeleteAllDogsConditions,
-  validateUpdateDogConditions,
-} from '../../middleware/validationMiddleware.ts';
+// import {
+//   validateCreateDogsConditions,
+//   validateDeleteAllDogsConditions,
+//   validateUpdateDogConditions,
+// } from '../../middleware/validationMiddleware.ts';
+import { validateRequest } from 'zod-express-middleware';
+import {z} from "zod";
 
 const router = express.Router({ mergeParams: true });
 
 router
   .route('/')
-  .patch(validateUpdateDogConditions, updateDogConditions)
-  .delete(validateDeleteAllDogsConditions, deleteAllDogsConditions);
+  .patch(
+    validateRequest({
+      params: z.object({
+        dogId: z.string(),
+      }),
+      body: z.object({
+        conditionIds: z.array(z.string()), //array
+      }),
+    }),
+    updateDogConditions
+  )
+  .delete(
+    validateRequest({
+      params: z.object({
+        dogId: z.string(),
+      }),
+    }),
+    deleteAllDogsConditions
+  );
 
 router
   .route('/')
   .get(getDogsConditions)
-  .post(validateCreateDogsConditions, createDogsConditions);
+  .post(
+    validateRequest({
+      params: z.object({
+        dogId: z.string(),
+      }),
+    }),
+    createDogsConditions
+  );
 
 export default router;
+

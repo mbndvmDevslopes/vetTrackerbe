@@ -1,5 +1,7 @@
 import { readFile } from 'fs/promises';
 import { PrismaClient } from '@prisma/client';
+import { DogType, Conditions } from 'src/Types.ts';
+
 
 const prisma = new PrismaClient();
 
@@ -14,7 +16,7 @@ try {
   const jsonConditions = JSON.parse(
     await readFile(new URL('MockDataConditions.json', import.meta.url), 'utf-8')
   );
-  const dogs = jsonDogs.map((dog) => {
+  const dogs = jsonDogs.map((dog: DogType) => {
     return { ...dog, vetId: user?.id };
   });
 
@@ -25,7 +27,7 @@ try {
   });
 
   await Promise.all(
-    dogs.map(async (dog) => {
+    dogs.map(async (dog: DogType) => {
       await prisma.dogs.create({
         data: dog,
       });
@@ -33,7 +35,7 @@ try {
   );
 
   await Promise.all(
-    jsonConditions.map(async (condition) => {
+    jsonConditions.map(async (condition: Conditions) => {
       await prisma.conditions.create({
         data: condition,
       });
