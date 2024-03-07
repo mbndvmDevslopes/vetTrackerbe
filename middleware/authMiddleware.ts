@@ -34,11 +34,13 @@ export const authenticateUser = async (
   }
 };
 
+
 export const authorizePermissions = (...role: string[]) => {
   return async (req: UserRequest, _: Response, next: NextFunction) => {
-    // if (!role.includes(req.user.role)) {
     if (req.user && role.includes(req.user.role)) {
+      console.log('true');
       next();
+      return;
     }
     throw new UnauthorizedError('unauthorized');
   };
