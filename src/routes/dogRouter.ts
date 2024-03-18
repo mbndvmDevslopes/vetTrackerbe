@@ -1,8 +1,5 @@
 import { Router } from 'express';
-import {
-  validateDogInput,
-  validateDogId,
-} from '../../middleware/validationMiddleware.ts';
+
 import { validateRequest } from 'zod-express-middleware';
 import { z } from 'zod';
 
@@ -19,13 +16,6 @@ import {
 import dogsConditionsRouter from './dogsConditionsRouter.ts';
 
 router.use('/:dogId/dogsConditions', dogsConditionsRouter);
-// router.route('/').get(getAllDogs).post(validateDogInput, createDog);
-// router
-//   .route('/:id')
-//   .get(validateDogId, getDog)
-//   .patch(validateDogInput, validateDogId, editDog)
-
-//   .delete(validateDogId, deleteDog);
 router
   .route('/')
   .get(getAllDogs)

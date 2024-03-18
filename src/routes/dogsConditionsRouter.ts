@@ -7,11 +7,7 @@ import {
   getDogsConditions,
   updateDogConditions,
 } from '../controllers/dogsConditionsController.ts';
-// import {
-//   validateCreateDogsConditions,
-//   validateDeleteAllDogsConditions,
-//   validateUpdateDogConditions,
-// } from '../../middleware/validationMiddleware.ts';
+
 import { validateRequest } from 'zod-express-middleware';
 import {z} from "zod";
 

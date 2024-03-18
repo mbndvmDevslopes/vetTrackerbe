@@ -4,10 +4,6 @@ import { z } from 'zod';
 const router = Router();
 
 import { login, logout, register } from '../controllers/authController.ts';
-// import {
-//   validateRegisterInput,
-//   validateLoginInput,
-// } from '../../middleware/validationMiddleware.ts';
 import rateLimit from 'express-rate-limit';
 
 const apiLimiter = rateLimit({
@@ -15,9 +11,6 @@ const apiLimiter = rateLimit({
   max: 10,
   message: { msg: 'IP rate limit exceeded,retry in 15 minutes' },
 });
-
-// router.post('/register', apiLimiter, validateRegisterInput, register);
-// router.post('/login', apiLimiter, validateLoginInput, login);
 router.post(
   '/register',
   apiLimiter,

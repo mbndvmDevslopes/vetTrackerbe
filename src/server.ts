@@ -1,6 +1,5 @@
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
-import morgan from 'morgan';
 
 // import * as dotenv from 'dotenv';
 import 'dotenv/config';
@@ -12,9 +11,7 @@ import 'express-async-errors';
 import cors from 'cors';
 
 const app = express();
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
-}
+
 
 //routers
 import dogRouter from './routes/dogRouter.ts';
