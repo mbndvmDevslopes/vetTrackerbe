@@ -7,8 +7,8 @@ import {
   getCurrentUser,
   updateUser,
   allUsers,
-} from '../controllers/userController.js';
-import { authorizePermissions } from '../../middleware/authMiddleware.ts';
+} from '../controllers/userController';
+import { authorizePermissions } from '../../middleware/authMiddleware';
 
 router.get('/current-user', getCurrentUser);
 router.get('/admin/all-users', [authorizePermissions('admin'), allUsers]);

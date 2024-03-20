@@ -14,15 +14,15 @@ const app = express();
 
 
 //routers
-import dogRouter from './routes/dogRouter.ts';
-import authRouter from './routes/authRouter.ts';
-import userRouter from './routes/userRouter.js';
+import dogRouter from './routes/dogRouter';
+import authRouter from './routes/authRouter';
+import userRouter from './routes/userRouter';
 
 //Middleware
-import { errorHandlerMiddleware } from '../middleware/errorHandlerMiddleware.ts';
-import { authenticateUser } from '../middleware/authMiddleware.ts';
-import conditionsRouter from './routes/conditionsRouter.ts';
-import conditionsCheckRouter from './routes/conditionsCheckRouter.ts';
+import { errorHandlerMiddleware } from '../middleware/errorHandlerMiddleware';
+import { authenticateUser } from '../middleware/authMiddleware';
+import conditionsRouter from './routes/conditionsRouter';
+import conditionsCheckRouter from './routes/conditionsCheckRouter';
 
 app.use(cors());
 app.use(express.json());
