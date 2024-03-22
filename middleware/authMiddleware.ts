@@ -1,6 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
 import { verifyJWT } from '../utils/tokenUtils';
+<<<<<<< HEAD
 import { UnauthenticatedError, UnauthorizedError } from '../errors/customError';
+=======
+import {
+  UnauthenticatedError,
+  UnauthorizedError,
+} from '../errors/customError';
+>>>>>>> 1e85b902226875bbc38ec610dc12576a0d7cedbb
 
 type UserRequest = Request & {
   user?: {

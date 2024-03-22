@@ -3,12 +3,21 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+<<<<<<< HEAD
+=======
+  
+>>>>>>> 1e85b902226875bbc38ec610dc12576a0d7cedbb
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "run": "nodemon build/server.js",
+<<<<<<< HEAD
     "dev": "npx  ts-node src/server.ts",
     "seed": "npx  ts-node utils/seedDb.ts",
+=======
+    "dev": "npx ts-node  src/server.ts",
+    "seed": "npx ts-node  utils/seedDb.ts",
+>>>>>>> 1e85b902226875bbc38ec610dc12576a0d7cedbb
     "typecheck": "tsc --noEmit "
   },
   "keywords": [],
