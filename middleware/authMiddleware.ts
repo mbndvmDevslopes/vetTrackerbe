@@ -1,9 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { verifyJWT } from '../utils/tokenUtils.ts';
-import {
-  UnauthenticatedError,
-  UnauthorizedError,
-} from '../errors/customError.ts';
+import { verifyJWT } from '../utils/tokenUtils';
+import { UnauthenticatedError, UnauthorizedError } from '../errors/customError';
 
 type UserRequest = Request & {
   user?: {

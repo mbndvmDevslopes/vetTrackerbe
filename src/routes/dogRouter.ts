@@ -12,8 +12,8 @@ import {
   editDog,
   deleteDog,
   editDogActiveStatus,
-} from '../controllers/dogController.js';
-import dogsConditionsRouter from './dogsConditionsRouter.ts';
+} from '../controllers/dogController';
+import dogsConditionsRouter from './dogsConditionsRouter';
 
 router.use('/:dogId/dogsConditions', dogsConditionsRouter);
 router

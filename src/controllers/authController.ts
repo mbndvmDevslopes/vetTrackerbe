@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { StatusCodes } from 'http-status-codes';
-import { hashPassword, comparePassword } from '../../utils/passwordUtils.ts';
-import { createJWT } from '../../utils/tokenUtils.js';
-import { UnauthenticatedError } from '../../errors/customError.ts';
+import { hashPassword, comparePassword } from '../../utils/passwordUtils';
+import { createJWT } from '../../utils/tokenUtils';
+import { UnauthenticatedError } from '../../errors/customError';
 
 const prisma = new PrismaClient();
 

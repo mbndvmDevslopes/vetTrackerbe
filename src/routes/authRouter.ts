@@ -3,7 +3,7 @@ import { validateRequest } from 'zod-express-middleware';
 import { z } from 'zod';
 const router = Router();
 
-import { login, logout, register } from '../controllers/authController.ts';
+import { login, logout, register } from '../controllers/authController';
 import rateLimit from 'express-rate-limit';
 
 const apiLimiter = rateLimit({

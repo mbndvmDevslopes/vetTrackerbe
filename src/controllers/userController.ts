@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { StatusCodes } from 'http-status-codes';
-import { excludePassword } from '../../utils/passwordUtils.ts';
+import { excludePassword } from '../../utils/passwordUtils';
 
 const prisma = new PrismaClient();
 

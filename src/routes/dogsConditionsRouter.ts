@@ -6,7 +6,7 @@ import {
   deleteAllDogsConditions,
   getDogsConditions,
   updateDogConditions,
-} from '../controllers/dogsConditionsController.ts';
+} from '../controllers/dogsConditionsController';
 
 import { validateRequest } from 'zod-express-middleware';
 import {z} from "zod";
