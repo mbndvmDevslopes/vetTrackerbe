@@ -9,3 +9,5 @@ dist-ssr
 
 build
 *.js
+# Local Netlify folder
+.netlify

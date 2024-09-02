@@ -23,7 +23,9 @@ import { errorHandlerMiddleware } from '../middleware/errorHandlerMiddleware';
 import { authenticateUser } from '../middleware/authMiddleware';
 import conditionsRouter from './routes/conditionsRouter';
 import conditionsCheckRouter from './routes/conditionsCheckRouter';
+import path from 'path';
 
+app.use(express.static(path.resolve(__dirname, './public')));
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
@@ -34,6 +36,13 @@ app.use('/api/user', authenticateUser, userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/conditions', authenticateUser, conditionsRouter);
 app.use('/api/checkUsage', authenticateUser, conditionsCheckRouter);
+// app.get('*', (_, res) => {
+//   res.sendFile(path.resolve(__dirname, '../public', 'index.html'));
+// });
+
+app.get('*', (_, res) => {
+  res.redirect('https://vettracker.onrender.com');
+});
 
 //NOT FOUND ROUTE MIDDLEWARE
 app.use('*', (_: Request, res: Response) => {
