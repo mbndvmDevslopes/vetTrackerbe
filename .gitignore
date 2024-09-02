@@ -7,7 +7,7 @@ dist-ssr
 .vscode/*
 !.vscode/extensions.json
 
-build
+
 *.js
 # Local Netlify folder
 .netlify
