@@ -9,7 +9,7 @@
     "dev": "npx  ts-node src/server.ts",
     "seed": "npx  ts-node utils/seedDb.ts",
     "typecheck": "tsc --noEmit ",
-    "build": "tsc --outDir build && ls build/src",
+    "build": "tsc",
     "start": "node build/src/server.js"
   },
   "keywords": [],
