@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../vetTracker/.idea/vetTracker.iml" filepath="$PROJECT_DIR$/../vetTracker/.idea/vetTracker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/vetTrackerbe.iml" filepath="$PROJECT_DIR$/.idea/vetTrackerbe.iml" />
+    </modules>
+  </component>
+</project>
