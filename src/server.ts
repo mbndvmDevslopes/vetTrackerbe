@@ -36,13 +36,13 @@ app.use('/api/user', authenticateUser, userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/conditions', authenticateUser, conditionsRouter);
 app.use('/api/checkUsage', authenticateUser, conditionsCheckRouter);
-// app.get('*', (_, res) => {
-//   res.sendFile(path.resolve(__dirname, '../public', 'index.html'));
-// });
-
 app.get('*', (_, res) => {
-  res.redirect('https://vettracker.onrender.com');
+  res.sendFile(path.resolve(__dirname, '../public', 'index.html'));
 });
+
+// app.get('*', (_, res) => {
+//   res.redirect('https://vettracker.onrender.com');
+// });
 
 //NOT FOUND ROUTE MIDDLEWARE
 app.use('*', (_: Request, res: Response) => {

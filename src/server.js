@@ -32,12 +32,12 @@ app.use('/api/user', authMiddleware_1.authenticateUser, userRouter_1.default);
 app.use('/api/auth', authRouter_1.default);
 app.use('/api/conditions', authMiddleware_1.authenticateUser, conditionsRouter_1.default);
 app.use('/api/checkUsage', authMiddleware_1.authenticateUser, conditionsCheckRouter_1.default);
-// app.get('*', (_, res) => {
-//   res.sendFile(path.resolve(__dirname, '../public', 'index.html'));
-// });
 app.get('*', (_, res) => {
-    res.redirect('https://vettracker.onrender.com');
+    res.sendFile(path_1.default.resolve(__dirname, '../public', 'index.html'));
 });
+// app.get('*', (_, res) => {
+//   res.redirect('https://vettracker.onrender.com');
+// });
 //NOT FOUND ROUTE MIDDLEWARE
 app.use('*', (_, res) => {
     res.status(404).json({ msg: 'not found' });
